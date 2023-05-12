@@ -15,8 +15,26 @@ class AdminRequest(Admin):
 class AdminResponse(Admin):
     id: int
     created_at: datetime
-    phone_number: int
+    phone_number: str
 
     class Config:
         orm_mode = True
 
+class Teacher(BaseModel):
+    name: str
+    dob: date
+    address: str
+    phone_number: str
+    manager: int
+    email: EmailStr
+
+class TeacherRequest(Admin):
+    password: str
+
+class TeacherResponse(Admin):
+    id: int
+    created_at: datetime
+    phone_number: int
+
+    class Config:
+        orm_mode = True

@@ -1,5 +1,6 @@
 import phonenumbers as phone
 from passlib.context import CryptContext
+from .schemas import adminSchema
 
 
 def validate_phone_number(number: str):
@@ -30,3 +31,20 @@ def hash(password:str):
 
 def verify(plain_password, hashed_password):
     return passwd_context.verify(plain_password, hashed_password)
+
+def update_dict(object: adminSchema.AdminUpdate, data) -> adminSchema.AdminUpdate:
+    object_py = adminSchema.AdminUpdate.from_orm(object)
+    object_dict = object_py.dict()
+    for i in data:
+        for j in object_dict:
+            if i == j:
+                if not data[i] == None:
+                    if i == "password":
+                        object_dict[j] = hash(data[i])
+                        continue
+                    object_dict[j] = data[i]
+    return object_dict
+    
+def check_user_type(type:str):
+    if type == "admin":
+        return True

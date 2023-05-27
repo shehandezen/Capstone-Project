@@ -7,7 +7,6 @@ class Admin(BaseModel):
     dob: date
     address: str
     phone_number: str
-    manager: int
     email: EmailStr
 
 class AdminUpdate(Admin):
@@ -15,7 +14,6 @@ class AdminUpdate(Admin):
     dob: Optional[date]
     address: Optional[str]
     phone_number: Optional[str]
-    manager: Optional[int]
     email: Optional[EmailStr]
     password: Optional[str]
 

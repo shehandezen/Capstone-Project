@@ -48,5 +48,10 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(
     user = db.query(model).filter(model.id == token.id).first()
     if not user:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invaild Credentials!")
-    return user
+    return token
 
+def user_role(user):
+    if not(user.type == 'admin'):
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Invaild Credentials")
+    return 'admin'
+    

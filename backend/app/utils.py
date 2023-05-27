@@ -1,8 +1,10 @@
 import phonenumbers as phone
 from passlib.context import CryptContext
 from .schemas import adminSchema
+from fastapi import HTTPException, status
 
 
+# validate the phone number
 def validate_phone_number(number: str):
     try:
         phone_number = phone.parse(number=number)
@@ -10,9 +12,7 @@ def validate_phone_number(number: str):
     except:
         return False
 
-def check_email_exist(email, db, entity, id = 0):
-      return db.query(entity).filter(entity.email == email, entity.id != id).first()
-    
+# check if the user enters negative values for the query parameters   
 def is_query_numbers_positive(*params):
     for param in params:
         if not type(param) == int:
@@ -26,13 +26,16 @@ passwd_context = CryptContext(
     deprecated= "auto"
 )
 
+# plain password text covert to the hashed password
 def hash(password:str):
     return passwd_context.hash(password)
 
+# verify the user entered password
 def verify(plain_password, hashed_password):
     return passwd_context.verify(plain_password, hashed_password)
 
-def update_dict(object: adminSchema.AdminUpdate, data) -> adminSchema.AdminUpdate:
+# update the dictionary by updated data dictionary
+def update_dict(object, data):
     object_py = adminSchema.AdminUpdate.from_orm(object)
     object_dict = object_py.dict()
     for i in data:
@@ -44,7 +47,9 @@ def update_dict(object: adminSchema.AdminUpdate, data) -> adminSchema.AdminUpdat
                         continue
                     object_dict[j] = data[i]
     return object_dict
-    
-def check_user_type(type:str):
-    if type == "admin":
+
+def check_admin_role(type):
+    if type == 'admin':
         return True
+    return False
+    

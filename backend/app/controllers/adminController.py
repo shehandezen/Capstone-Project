@@ -1,6 +1,7 @@
 from fastapi import HTTPException, status
 from .. import utils
 from .dataController import DataController
+from ..schemas import adminSchema
 
 
 class AdminController:
@@ -13,6 +14,8 @@ class AdminController:
                 raise HTTPException(status_code=status.HTTP_406_NOT_ACCEPTABLE,
                                     detail="Some query parameters are not valid.")
             return self.data_controller.get_all_data_with_query(search=search, skip=skip, limit=limit, db=db)
+        else:
+            raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Not authorized to perform requested task.")
         
 
     def create_admin(self, admin_data, db):
@@ -31,6 +34,8 @@ class AdminController:
             if not admin:
                 raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"A admin does not exist for id:{id}.")
             return admin
+        else:
+            raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Not authorized to perform requested task.")
 
     def delete_admin(self, id, db, current_user):
         if utils.check_admin_role(type=current_user.role):
@@ -40,6 +45,8 @@ class AdminController:
                 raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"A admin does not exist for id:{id}.")
             if self.data_controller.delete_record(id=id, db=db):
                 return HTTPException(status_code=status.HTTP_204_NO_CONTENT, detail=f"The admin:{id} was deleted.")
+        else:
+            raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Not authorized to perform requested task.")
 
     def update_admin(self, id, updated_admin, db, current_user):
         if utils.check_admin_role(type=current_user.role):
@@ -50,6 +57,8 @@ class AdminController:
                 raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"A admin does not exist for id:{id}.")
             if self.data_controller.check_email_exist(email=updated_admin.email, id=id, db=db):
                 raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=f"Given email is already exist.")
-            updated_admin = utils.update_dict(admin, updated_admin.dict())
+            updated_admin = utils.update_dict(admin, updated_admin.dict(), update_schema=adminSchema.AdminUpdate)
             return self.data_controller.update_data(id=id, updated_data=updated_admin, db=db)
+        else:
+            raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Not authorized to perform requested task.")
             

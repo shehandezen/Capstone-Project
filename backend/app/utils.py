@@ -35,8 +35,8 @@ def verify(plain_password, hashed_password):
     return passwd_context.verify(plain_password, hashed_password)
 
 # update the dictionary by updated data dictionary
-def update_dict(object, data):
-    object_py = adminSchema.AdminUpdate.from_orm(object)
+def update_dict(object, data, update_schema):
+    object_py = update_schema.from_orm(object)
     object_dict = object_py.dict()
     for i in data:
         for j in object_dict:
@@ -48,8 +48,24 @@ def update_dict(object, data):
                     object_dict[j] = data[i]
     return object_dict
 
+# check current user type is admin
 def check_admin_role(type):
     if type == 'admin':
         return True
     return False
+
+# check current user type is teacher
+def check_teacher_role(type):
+    if type == 'teacher':
+        return True
+    return False
+    
+# check current user type is student
+def check_student_role(type):
+    if type == 'student':
+        return True
+    return False
+    
+
+
     

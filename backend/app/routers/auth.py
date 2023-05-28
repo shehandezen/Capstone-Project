@@ -16,4 +16,4 @@ class ExtendedOAuth2PasswordRequestForm(OAuth2PasswordRequestForm):
 # user login endpoint
 @router.post("/", status_code=status.HTTP_202_ACCEPTED)
 def login( type:str, user_credentials: ExtendedOAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
-   return authController.login_user(user_credentials, db, adminModel.Admin, type)
+   return authController.login_user(user_credentials, db, type)

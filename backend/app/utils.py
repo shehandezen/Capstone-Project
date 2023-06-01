@@ -2,6 +2,8 @@ import phonenumbers as phone
 from passlib.context import CryptContext
 from .schemas import adminSchema
 from fastapi import HTTPException, status
+from datetime import datetime
+
 
 
 # validate the phone number
@@ -65,7 +67,4 @@ def check_student_role(type):
     if type == 'student':
         return True
     return False
-    
-
-
     

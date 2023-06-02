@@ -1,6 +1,7 @@
 from pydantic import BaseModel, EmailStr
 from datetime import date, datetime
-from typing import Optional
+from typing import Optional, List
+from .courseSchema import CourseResponse
 
 class Student(BaseModel):
     name: str
@@ -26,10 +27,20 @@ class StudentUpdate(Student):
 class StudentRequest(Student):
     password: str
 
+class StudentResponseAll(Student):
+    id: int
+    parent_phone_number: Optional[str]
+    created_at: datetime
+    courses: List[CourseResponse]
+    
+
+    class Config:
+        orm_mode = True
+
 class StudentResponse(Student):
     id: int
     parent_phone_number: Optional[str]
     created_at: datetime
-
+    
     class Config:
         orm_mode = True

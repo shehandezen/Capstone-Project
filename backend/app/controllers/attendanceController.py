@@ -19,7 +19,7 @@ class AttendanceController:
                 condition = True
             else:
                 condition = (model.date == date)
-            return self.data_controller.get_multiple_records_by_join(model_id=model.class_id, joined_model=joined_model, id_type=id_type, id=id, limit=limit, skip=skip, db=db, other_condition=condition)
+            return self.data_controller.get_multiple_attendance_records_by_join(model_id=model.class_id, joined_model=joined_model, id_type=id_type, id=id, limit=limit, skip=skip, db=db, other_condition=condition)
             
         else:
             raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Not authorized to perform requested task.")
@@ -35,7 +35,7 @@ class AttendanceController:
                 condition = True
             else:
                 condition = (model.date == date)
-            return self.data_controller.get_multiple_records_by_join(model_id=model.class_id, joined_model=joined_model, id_type=id_type, id=id, limit=limit, skip=skip, db=db, other_condition=condition)
+            return self.data_controller.get_multiple_attendance_records_by_join(model_id=model.class_id, joined_model=joined_model, id_type=id_type, id=id, limit=limit, skip=skip, db=db, other_condition=condition)
             
         else:
             raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Not authorized to perform requested task.")
@@ -51,7 +51,7 @@ class AttendanceController:
             if not class_record:
               raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"The student with id:{attendance_data.student_id} is not following course id:{attendance_data.course_id}")
             class_id = class_record.id
-            if self.data_controller.check_record_exist(id=class_id, date=attendance_data.date, db=db):
+            if self.data_controller.check_date_column_exist(id=class_id, date=attendance_data.date, db=db):
                 raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="That attendance record already exist.")
             attendance = attendanceSchema.AttendanceDatabase(class_id=class_id, date=attendance_data.date, status=attendance_data.status)
             response_data = self.data_controller.insert_data(attendance, db=db)

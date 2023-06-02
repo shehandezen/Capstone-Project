@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from typing import List, Optional
 from ..database import get_db
 from ..controllers import dataController, studentController, oauth2
-from ..models import studentModel
+from ..models import studentModel, courseModel
 from ..schemas import studentSchema
 
 
@@ -28,9 +28,9 @@ def create_student(student: studentSchema.StudentRequest, db: Session= Depends(g
         
 
 # get student details by his id
-@router.get("/{id}", status_code=status.HTTP_200_OK, response_model=studentSchema.StudentResponse)
+@router.get("/{id}", status_code=status.HTTP_200_OK, response_model=studentSchema.StudentResponseAll)
 def get_student(id: int, db: Session= Depends(get_db), current_user = Depends(oauth2.get_current_user)):
-    return controller.get_student(id=id, db=db, current_user=current_user)
+    return controller.get_student(model=courseModel.Course ,id=id, db=db, current_user=current_user)
 
 # delete a student by id
 @router.delete("/{id}", status_code=status.HTTP_204_NO_CONTENT)

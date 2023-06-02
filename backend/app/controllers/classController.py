@@ -31,3 +31,13 @@ class ClassController:
                 return HTTPException(status_code=status.HTTP_204_NO_CONTENT, detail=f"The student:{student_id} was unenrolled from course id:{course_id}.")
         else:
             raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Not authorized to perform requested task.")
+
+
+    def get_courses_by_student(self, id, db, current_user):
+        if utils.check_admin_role(type=current_user.role) or utils.check_teacher_role(type=current_user.role) or utils.check_student_role(type=current_user.role):
+            if utils.check_student_role(type=current_user.role):
+                if not current_user.id == int(id):
+                    raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Not authorized to perform requested task.")
+
+        else:
+            raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Not authorized to perform requested task.")

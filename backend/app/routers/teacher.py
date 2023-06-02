@@ -26,7 +26,7 @@ def create_teacher(teacher: teacherSchema.TeacherRequest, db: Session= Depends(g
     return controller.create_teacher(teacher_data=teacher, db=db)
         
 # get admin details by his id
-@router.get("/{id}", status_code=status.HTTP_200_OK, response_model=teacherSchema.TeacherResponse)
+@router.get("/{id}", status_code=status.HTTP_200_OK, response_model=teacherSchema.TeacherResponseAll)
 def get_teacher(id: int, db: Session= Depends(get_db), current_user = Depends(oauth2.get_current_user)):
     return controller.get_teacher(id=id, db=db, current_user=current_user)
 

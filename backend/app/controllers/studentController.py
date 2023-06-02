@@ -2,6 +2,7 @@ from fastapi import HTTPException, status
 from .dataController import DataController
 from .. import utils
 from ..schemas import studentSchema
+from ..models import classModel
 
 class StudentController:
     def __init__(self, data_controller: DataController):
@@ -17,7 +18,7 @@ class StudentController:
             raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Not authorized to perform requested task.")
 
     
-    def get_student(self, id, db, current_user):
+    def get_student(self, id, model, db, current_user):
         if utils.check_admin_role(type=current_user.role) or utils.check_teacher_role(type=current_user.role) or utils.check_student_role(type=current_user.role):
             if utils.check_student_role(type=current_user.role):
                 if not id == int(current_user.id):
@@ -25,7 +26,9 @@ class StudentController:
             student = self.data_controller.get_data(id=id, db=db)
             if not student:
                 raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"A student does not exist for id:{id}.")
-            return student
+            courses = self.data_controller.get_multiple_course_records_by_join(model=model, joined_model=classModel.Class, id_type=classModel.Class.student_id, id=id, db=db)
+            student = studentSchema.StudentResponse.from_orm(student)
+            return studentSchema.StudentResponseAll(courses=courses, **student.dict())
         else:
             raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Not authorized to perform requested task.")
 

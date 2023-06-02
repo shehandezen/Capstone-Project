@@ -2,6 +2,7 @@ from fastapi import HTTPException, status
 from .dataController import DataController
 from .. import utils
 from ..schemas import teacherSchema
+from ..models import courseModel
 
 class TeacherController:
     def __init__(self, data_controller: DataController):
@@ -24,7 +25,9 @@ class TeacherController:
             teacher = self.data_controller.get_data(id=id, db=db)
             if not teacher:
                 raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"A teacher does not exist for id:{id}.")
-            return teacher
+            courses = self.data_controller.get_multiple_course_records_by_teacher(model=courseModel.Course, id_type=courseModel.Course.teacher_id, id=id, db=db)
+            teacher = teacherSchema.TeacherResponse.from_orm(teacher)
+            return teacherSchema.TeacherResponseAll(courses=courses, **teacher.dict())
         else:
             raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Not authorized to perform requested task.")
 

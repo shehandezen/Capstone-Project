@@ -24,10 +24,18 @@ class DataController:
 
 # select class.course_id, class.student_id, attendance.date, attendance.status from attendance left join class on attendance.class_id = class.id where class.course_id = {id}
 #  db.query(self.model, joined_model).join(joined_model, joined_model.id == self.model.class_id, isouter=True).filter(joined_model.course_id == id).limit(limit).offset(skip).all()
-    def get_multiple_records_by_join(self, model_id, joined_model, id_type, id, limit, skip, db, other_condition):
-        
+    def get_multiple_attendance_records_by_join(self, model_id, joined_model, id_type, id, limit, skip, db, other_condition):
         return db.query(self.model.id, self.model.date, self.model.status, joined_model.course_id,joined_model.student_id).join(joined_model, joined_model.id == model_id , isouter=True).filter(other_condition, id_type == id ).limit(limit).offset(skip).all()
 
+    def get_multiple_grade_records_by_join(self, model_id, joined_model, id_type, id, limit, skip, db, other_condition):
+        return db.query(self.model.id, self.model.semester, self.model.grade, self.model.created_at, joined_model.course_id,joined_model.student_id).join(joined_model, joined_model.id == model_id , isouter=True).filter(other_condition, id_type == id ).limit(limit).offset(skip).all()
+
+    def get_multiple_course_records_by_join(self, model, joined_model, id_type, id, db):
+        return db.query(model).join(joined_model, joined_model.course_id == model.id , isouter=True).filter(id_type == id).all()
+    
+    def get_multiple_course_records_by_teacher(self, model, id_type, id, db):
+        return db.query(model).join(self.model, self.model.id == id_type , isouter=True).filter(id_type == id).all()
+    
     # update a database record using given id
     def update_data(self, id, updated_data, db):
         db.query(self.model).filter(self.model.id == id).update(updated_data, synchronize_session=False)
@@ -47,5 +55,8 @@ class DataController:
     def select_two_ids(self, model, course_id, student_id, db):
         return db.query(model).filter(model.course_id == course_id, model.student_id == student_id).first()
 
-    def check_record_exist(self, id, date, db):
+    def check_date_column_exist(self, id, date, db):
         return db.query(self.model).filter(self.model.class_id == id , self.model.date ==date).first()
+
+    def check_semester_column_exist(self, id, semester, db):
+        return db.query(self.model).filter(self.model.class_id == id , self.model.semester == semester).first()

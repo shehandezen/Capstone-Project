@@ -10,6 +10,10 @@ router = APIRouter(
     tags=['Authentication']
 )
 
+class ExtendedOAuth2PasswordRequestForm(OAuth2PasswordRequestForm):
+        type: str
+
+# user login endpoint
 @router.post("/", status_code=status.HTTP_202_ACCEPTED)
-def login( user_credentials: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
-   return authController.login_user(user_credentials, db, adminModel.Admin, "admin")
+def login( type:str, user_credentials: ExtendedOAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
+   return authController.login_user(user_credentials, db, type)

@@ -85,8 +85,8 @@ jobs:
           image: shehandezen/school-information-system-api
 #           # Options
 #           options: # optional
-#           # Run command in container
-#           run: # optional
+          # Run command in container
+          run: uvicorn app.main:app 
 #           # Use a specific shell
 #           shell: # optional, default is sh
 #           # Registry

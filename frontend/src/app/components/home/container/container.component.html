@@ -1,0 +1,33 @@
+
+
+<div class="container" id="container">
+      <!-- wave start -->
+      <div class="waves"></div>
+      <!-- wave end -->
+      <!-- header start -->
+      <div class="header">
+        <img src="../../../assets/logo.svg" class="logo" alt="" />
+        <div class="form-toggle-btn">
+          <button class="ripple-btn" (click)="toggleForms()" #formToggle>Sign in</button>
+        </div>
+      </div>
+      <!-- header end -->
+      <!-- hero start -->
+      <div class="hero-container" #hero>
+      <div *ngIf = "!toggle" class="sign-in" >
+       <app-sign-in [toggle]="toggle" ></app-sign-in> 
+       </div>
+        <div class="heading" id="heading">
+          <h2>
+            <span class="school">School</span> <br />
+            <span class="information">Information</span> <br />
+            <span class="system">System</span>
+          </h2>
+        </div>
+      
+       <div *ngIf = "toggle" class="sign-up" >
+      <app-sign-up [toggle]="toggle"  ></app-sign-up>
+      </div>
+       </div>
+      <!-- hero end -->
+    </div>

@@ -1,1 +1,47 @@
-/* You can add global styles to this file, and also import other style files */
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap");
+
+:root {
+  --light-background: #fff;
+  --white: #fff;
+  --primary-color: #0c89ff;
+  --secondary-color: #58afc8;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Ubuntu", sans-serif;
+  transition: 0.5s;
+}
+
+body {
+  overflow: hidden;
+}
+
+/* app-sign-in {
+  order: 1;
+}
+.hero-container .heading {
+  order: 2;
+}
+app-sign-up {
+  order: 3;
+} */
+
+@media (max-width: 935px) {
+  .sign-in {
+    position: relative;
+    order: 2;
+    /* padding-bottom: 25px; */
+  }
+  .hero-container .heading {
+    position: relative;
+    top: 150px;
+    order: 1;
+  }
+  .sign-up {
+    position: relative;
+    order: 2;
+  }
+}

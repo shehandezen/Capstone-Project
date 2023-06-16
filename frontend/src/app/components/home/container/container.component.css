@@ -186,6 +186,7 @@
 @media (max-width: 935px) {
   .container {
     overflow-y: auto;
+    /* test */
   }
   .hero-container {
     grid-template-columns: 1fr;

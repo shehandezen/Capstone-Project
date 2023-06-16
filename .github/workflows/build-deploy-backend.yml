@@ -62,7 +62,7 @@ jobs:
           file: ./backend/dockerfile
           builder: ${{ steps.buildx.outputs.name }}
           push: true
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/shehandezen/school-information-system-api:latest
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/school-information-system-api:latest
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
       - name: Image digest

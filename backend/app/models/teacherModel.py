@@ -1,10 +1,10 @@
 from ..database import Base
-from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, Date
+from sqlalchemy import Column, Integer, String, Date
 from sqlalchemy.sql.sqltypes import TIMESTAMP
 from sqlalchemy.sql.expression import text
 
-class Admin(Base):
-    __tablename__ = "administrator"
+class Teacher(Base):
+    __tablename__ = "teacher"
     id = Column(Integer, primary_key=True, nullable=False)
     name = Column(String, nullable=False)
     dob = Column(Date, nullable=False)
@@ -13,4 +13,3 @@ class Admin(Base):
     email = Column(String, nullable=False, unique=True)
     password = Column(String, nullable=False)
     created_at = Column(TIMESTAMP(timezone=True), nullable=False, server_default=text('now()') )
-

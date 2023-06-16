@@ -6,8 +6,7 @@ from sqlalchemy.orm import Session
 from ..config import settings
 from ..schemas import tokenSchema
 from ..database import get_db
-from ..models import adminModel
-
+from ..models import adminModel, teacherModel, studentModel
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
 
@@ -40,6 +39,10 @@ def verify_access_token(token: str, credential_exception):
 def select_user_type(role):
     if role == "admin":
         return adminModel.Admin
+    elif role == "teacher":
+        return teacherModel.Teacher
+    elif role == "student":
+        return studentModel.Student
 
 def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
     credential_exception = HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Could not validate Credentials!")
@@ -48,5 +51,5 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(
     user = db.query(model).filter(model.id == token.id).first()
     if not user:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invaild Credentials!")
-    return user
+    return token
 

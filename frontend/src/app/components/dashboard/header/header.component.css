@@ -1,0 +1,93 @@
+.topbar {
+  width: 100%;
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10px;
+}
+
+.toggle {
+  position: relative;
+  top: 0px;
+  width: 60px;
+  height: 60px;
+  /* background: var(--white); */
+  font-size: 1.5em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.toggle svg {
+  width: 25px;
+}
+
+.search {
+  position: relative;
+  padding: 0 10px;
+  width: 400px;
+}
+
+.search label {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: row-reverse;
+}
+
+.search label input {
+  width: 100%;
+  height: 40px;
+  border-radius: 40px;
+  padding: 5px 20px;
+  padding-left: 35px;
+  font-size: 18px;
+  outline: none;
+  border: 1px solid var(--black2);
+}
+
+.search label img {
+  position: absolute;
+  left: 10px;
+  font-size: 1em;
+  width: 20px;
+}
+
+.user {
+  position: relative;
+  min-width: 40px;
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.user img {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (max-width: 480px) {
+  .toggle {
+    z-index: 1001;
+    right: 0px;
+  }
+
+  .toggle-active.toggle {
+    color: var(--white);
+    position: fixed;
+    right: 0px;
+  }
+
+  .toggle-active.toggle svg rect {
+    stroke: #fff;
+  }
+}

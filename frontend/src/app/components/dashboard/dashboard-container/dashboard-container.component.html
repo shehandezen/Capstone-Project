@@ -1,0 +1,5 @@
+<div class="container">
+    <app-sidebar [sideBarToggled]="sideBarToggled"></app-sidebar>
+    <app-main [sideBarToggled]="sideBarToggled" (toggle)="onToggle($event)"></app-main>
+
+    </div>

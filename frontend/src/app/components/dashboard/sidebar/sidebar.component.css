@@ -1,0 +1,216 @@
+* {
+  transition: 0s;
+}
+.navigation {
+  position: fixed;
+  width: 80px;
+  height: 100%;
+  background: var(--primary-color);
+  border-left: 10px solid var(--primary-color);
+  transition: 0.5s;
+  overflow: hidden;
+  z-index: 100;
+}
+.navigation.active {
+  width: 300px;
+}
+
+.navigation ul {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+}
+
+.navigation ul li {
+  position: relative;
+  width: 100%;
+  list-style: none;
+  border-top-left-radius: 30px;
+  border-bottom-left-radius: 30px;
+}
+
+.navigation ul li:hover,
+.navigation ul li.hovered {
+  background: var(--white);
+}
+
+.navigation ul li:nth-child(1) {
+  margin-bottom: 40px;
+  pointer-events: none;
+  font-size: 20px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.navigation ul li:nth-child(1) span img {
+  margin-left: 0px;
+  margin-top: 15px;
+  width: 40px;
+}
+
+.navigation ul li:nth-child(2) {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+}
+
+.navigation.active ul li:nth-child(2) {
+  /* margin-bottom: 180px; */
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.navigation ul li:nth-child(2) .icon {
+  position: relative;
+  right: 5px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.navigation ul li:nth-child(2) .icon img {
+  margin-top: 15px;
+  width: 60%;
+  border-radius: 50%;
+  z-index: 10000;
+}
+
+.navigation ul li:nth-child(2) .title {
+  margin-top: 10px;
+  color: var(--white);
+  font-size: 1.2em;
+  font-weight: 500;
+  display: none;
+}
+
+.navigation.active ul li:nth-child(2) .title {
+  display: flex;
+}
+
+.navigation ul li:nth-child(2) {
+  margin-bottom: 40px;
+  pointer-events: none;
+}
+
+.navigation ul li a {
+  position: relative;
+  display: flex;
+  width: 100%;
+  text-decoration: none;
+  color: var(--white);
+}
+
+.navigation ul li:hover a,
+.navigation ul li.hovered a {
+  color: var(--primary-color);
+}
+
+.navigation ul li a .icon {
+  position: relative;
+  top: -5px;
+  display: block;
+  height: 60px;
+  min-width: 60px;
+  line-height: 70px;
+  text-align: center;
+  font-size: 1.75em;
+  transition: none;
+}
+
+/* .navigation ul li a .icon {
+  transition: 0s;
+  font-size: 1em;
+} */
+
+.navigation ul li a .title {
+  position: relative;
+  display: block;
+  padding: 0 10px;
+  height: 60;
+  line-height: 60px;
+  text-align: start;
+  white-space: nowrap;
+}
+
+.navigation ul li:hover a:before,
+.navigation ul li.hovered a:before {
+  content: "";
+  position: absolute;
+  top: -50px;
+  right: 0px;
+  width: 50px;
+  height: 50px;
+  background: transparent;
+  border-radius: 50%;
+  box-shadow: 35px 35px 0 10px var(--white);
+  transition: 0.5s;
+}
+
+.navigation ul li:hover a:after,
+.navigation ul li.hovered a:after {
+  content: "";
+  position: absolute;
+  bottom: -50px;
+  right: 0px;
+  width: 50px;
+  height: 50px;
+  background: transparent;
+  border-radius: 50%;
+  box-shadow: 35px -35px 0 10px var(--white);
+  pointer-events: none;
+  transition: 0.5s;
+}
+
+/* .navigation.active ul li:hover a:before,
+.navigation.active ul li.hovered a:before {
+  content: "";
+  position: absolute;
+  top: -50px;
+  right: 0px;
+  width: 50px;
+  height: 50px;
+  background: transparent;
+  border-radius: 50%;
+  box-shadow: 35px 35px 0 10px var(--white);
+  transition: 0.5s;
+}
+
+.navigation.active ul li:hover a:after,
+.navigation.active ul li.hovered a:after {
+  content: "";
+  position: absolute;
+  bottom: -50px;
+  right: 0px;
+  width: 50px;
+  height: 50px;
+  background: transparent;
+  border-radius: 50%;
+  box-shadow: 35px -35px 0 10px var(--white);
+  pointer-events: none;
+  transition: 0.5s;
+} */
+
+@media (max-width: 480px) {
+  .navigation {
+    width: 100%;
+    left: -100%;
+    z-index: 1000;
+  }
+  .navigation.active {
+    width: 100%;
+    left: 0px;
+  }
+  .navigation ul li:nth-child(2) span img {
+    margin-top: 0px;
+    width: 40%;
+  }
+}
